@@ -5,10 +5,10 @@ import { logger } from "hono/logger";
 
 export const allRoutes = new Hono();
 
-allRoutes.use(logger());
+
 
 allRoutes.route("/authentication", authenticationRoutes);
-
+allRoutes.use(logger());
 
 allRoutes.get("/health", (context) => {
   return context.json(
