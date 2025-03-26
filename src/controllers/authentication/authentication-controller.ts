@@ -6,10 +6,9 @@ import {
   type LogInWithUsernameAndPasswordResult,
   type SignUpWithUsernameAndPasswordResult,
 } from "./authentication-types";
-import { prismaClient } from "../../../prisma/prismaClient"; // Update the path to the correct location of prismaClient
+import { prismaClient } from "../../extras/prisma"; // Adjusted the path to match the correct location of prismaClient
 import jwt from "jsonwebtoken";
-import { jwtSecretKey } from "../../../environment";
-
+import { jwtSecretKey } from "../../../environment"; 
 export const signUpWithUsernameAndPassword = async (parameters: {
   username: string;
   password: string;
@@ -28,14 +27,14 @@ export const signUpWithUsernameAndPassword = async (parameters: {
 
   const user = await prismaClient.user.create({
     data: {
-      username: parameters.username,
+      userName: parameters.username,
       password: passwordHash,
     },
   });
 
   const token = createJWToken({
     id: user.id,
-    username: user.username,
+    username: user.userName,
   });
 
   const result: SignUpWithUsernameAndPasswordResult = {
@@ -58,7 +57,7 @@ export const logInWithUsernameAndPassword = async (parameters: {
   // 2. Find the user with the username and password hash
   const user = await prismaClient.user.findUnique({
     where: {
-      username: parameters.username,
+      userName: parameters.username,
       password: passwordHash,
     },
   });
@@ -71,7 +70,7 @@ export const logInWithUsernameAndPassword = async (parameters: {
   // 4. If the user is found, create a JWT token and return it
   const token = createJWToken({
     id: user.id,
-    username: user.username,
+    username: user.userName,
   });
 
   return {
@@ -98,7 +97,7 @@ const createJWToken = (parameters: { id: string; username: string }): string => 
 const checkIfUserExistsAlready = async (parameters: { username: string }): Promise<boolean> => {
   const existingUser = await prismaClient.user.findUnique({
     where: {
-      username: parameters.username,
+      userName: parameters.username,
     },
   });
 
