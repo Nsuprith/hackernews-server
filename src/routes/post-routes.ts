@@ -5,12 +5,12 @@ import {
   deletePost,
   getAllPosts,
   getPostsByUser,
-} from "../controllers/posts/post-contoller";
+} from "../controllers/posts/post-controller";
 import {
   DeletePostError,
   GetPostsError,
   PostStatus,
-} from "../controllers/posts/post-type";
+} from "../controllers/posts/post-types";
 
 export const postsRoutes = new Hono();
 postsRoutes.post("/", tokenMiddleware, async (context) => {
