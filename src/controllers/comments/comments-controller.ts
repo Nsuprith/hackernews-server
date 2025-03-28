@@ -4,7 +4,7 @@ import {
   CommentStatus,
   type CreatCommentResult,
   type CommentResult,
-} from "./comments-type";
+} from "../comments/comments-types";
 
 export const createComment = async (params: {
   content: string;
@@ -53,7 +53,7 @@ export const getAllComments = async (params: {
         user: {
           select: {
             id: true,
-            username: true,
+            userName: true,
           },
         },
       },
