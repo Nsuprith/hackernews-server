@@ -20,17 +20,20 @@ WORKDIR /app
 # Step 4: Copy package.json and package-lock.json for better caching
 COPY package*.json ./
 
-# Step 5: Install dependencies (including TypeScript)
+# Step 5: Install dependencies
 RUN npm install
 
-# Step 6: Copy remaining source files
+# ✅ Step 6: Copy remaining source files including Prisma schema
 COPY . .
 
-# Step 7: **Build TypeScript files**
+# ✅ Step 7: Now that schema is available, generate Prisma client
+RUN npx prisma generate
+
+# Optional: Build TypeScript (if needed)
 RUN npm run build
 
-# Step 8: Expose port 3000
+# Step 8: Expose the port your app runs on
 EXPOSE 3000
 
-# Step 9: Run the application
+# Step 9: Start the app
 CMD ["npm", "start"]
