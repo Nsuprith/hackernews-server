@@ -18,7 +18,7 @@ authenticationRoutes.post("/sign-up", async (context) => {
       username,
       password,
     });
-
+ 
     return context.json(
       {
         data: result,
