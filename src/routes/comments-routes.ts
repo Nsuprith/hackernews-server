@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { CommentStatus } from "../controllers/comments/comments-type";
+import { CommentStatus } from "../controllers/comments/comments-types";
 import { tokenMiddleware } from "../routes/middlewares/token-middleware";
 import {
   createComment,
